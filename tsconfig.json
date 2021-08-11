@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es2019",
+    "module": "commonjs",
+    "lib": [
+      "dom", // the apollo libraries require DOM type definitions
+      "es2019",
+      "es2020.bigint",
+      "es2020.string",
+      "es2020.symbol.wellknown"
+    ],
+    "outDir": "dist",
+    "rootDir": "src",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "noEmitOnError": false,
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/",
+    "declaration": true,
+    "strictNullChecks": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "src/config"]
+}
