@@ -38,6 +38,10 @@ AWSXRay.middleware.enableDynamicNaming('*');
 
 app.use(express.json());
 
+app.get('/.well-known/server-health', (req, res) => {
+  res.status(200).send('ok');
+});
+
 // TODO: return appropriate cache headers here
 // let's start with 30 minutes
 // need to research exact header names
