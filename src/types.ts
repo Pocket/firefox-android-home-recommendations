@@ -9,6 +9,10 @@ export type FAHRecommendation = {
   category: string;
 };
 
+export type FAHRecommendationResponse = {
+  recommendations: FAHRecommendation[];
+};
+
 // the below types are those coming from Client API
 export type ClientApiResponse = {
   data: {

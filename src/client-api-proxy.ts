@@ -5,12 +5,19 @@ import gql from 'graphql-tag';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'cross-fetch';
 import { config } from './config';
-import { ClientApiResponse, ClientApiSlate, FAHRecommendation } from './types';
+import {
+  ClientApiResponse,
+  ClientApiSlate,
+  FAHRecommendation,
+  FAHRecommendationResponse,
+} from './types';
 import { transformSlateRecs, deriveCategory } from './lib';
 
 const client = new ApolloClient({
   link: createHttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
   cache: new InMemoryCache(),
+  name: config.app.apolloClientName,
+  version: config.app.version,
 });
 
 /**
@@ -18,7 +25,7 @@ const client = new ApolloClient({
  * to match expected schema.
  * @returns
  */
-export async function getRecommendations(): Promise<FAHRecommendation[]> {
+export async function getRecommendations(): Promise<FAHRecommendationResponse> {
   let recs: FAHRecommendation[] = [];
   let data: ClientApiResponse | null = null;
 
@@ -37,7 +44,9 @@ export async function getRecommendations(): Promise<FAHRecommendation[]> {
     });
   }
 
-  return recs;
+  return {
+    recommendations: recs,
+  };
 }
 
 /**

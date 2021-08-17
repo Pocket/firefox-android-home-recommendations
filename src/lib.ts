@@ -49,6 +49,9 @@ export function deriveCategory(slateDesc: string): string {
 
   // i don't like any of this, but it's the most straight forward and semi
   // future-proof approach i could think of.
+
+  // TODO: sync w/web home team (mathijs & chelsea) to see how they're
+  // handling this very fun problem
   if (slateDesc.includes('short reads')) {
     category = 'quick-reads';
   } else if (slateDesc.includes('technology')) {
