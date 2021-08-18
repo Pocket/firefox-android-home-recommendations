@@ -177,12 +177,12 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
           threshold: 10,
           evaluationPeriods: 2,
           period: 600,
-          actions: config.isDev ? [] : [pagerDuty.snsCriticalAlarmTopic.arn],
+          actions: config.isDev ? [] : [],
         },
         httpLatency: {
           evaluationPeriods: 2,
           threshold: 500,
-          actions: config.isDev ? [] : [pagerDuty.snsCriticalAlarmTopic.arn],
+          actions: config.isDev ? [] : [],
         },
       },
     });

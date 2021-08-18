@@ -30,7 +30,7 @@ export const config = {
   },
   codePipeline: {
     githubConnectionArn,
-    repository: 'pocket/parser-graphql-wrapper',
+    repository: 'pocket/firefox-android-home-recommendations',
     branch,
   },
   healthCheck: {
