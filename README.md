@@ -10,7 +10,9 @@ Provides recommendations to be consumed by Firefox for Android.
 
 Because all Firefox Android clients will be hitting this endpoint, caching is _very_ aggressive.
 
-TODO: describe our caching strategy as soon as we have it. CDN, headers, you know, probably stuff like that.
+In AWS (but _not_ for local development), our cache header on the Express endpoint is `'Cache-control', 'public, max-age=1800'`. We also have a CDN in place which respects this cache header, meaning the _most_ frequent the underlying service will be hit is every 30 minutes.
+
+As of this writing (2021-08-19), the underlying recommendation service will update _at most_ every hour. We have chosen a 30 minute cache for practicality (a faster expire time just in case), and performance reasons (2 service hits per hour is well within our application service limits).
 
 ## Local Development
 
