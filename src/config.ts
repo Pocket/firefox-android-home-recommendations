@@ -8,7 +8,7 @@ export const config = {
     slateLineupId: 'a26db39b-a68a-4e01-b680-443a466f9c36',
     // TODO: check with petru on placeholder dimensions below & quality level
     imageCdnPrefix:
-      'https://img-getpocket.cdn.mozilla.net/600x400/filters:format(jpeg):quality(60):no_upscale():strip_exif()/',
+      'https://img-getpocket.cdn.mozilla.net/{wh}/filters:format(jpeg):quality(60):no_upscale():strip_exif()/',
   },
   sentry: {
     dsn: process.env.SENTRY_DSN || '',
