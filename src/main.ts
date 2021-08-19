@@ -46,6 +46,11 @@ app.get('/.well-known/server-health', (req, res) => {
 // let's start with 30 minutes
 // need to research exact header names
 app.get('/', async (req, res) => {
+  // enable 30 minute cache when in AWS
+  if (config.app.environment !== 'development') {
+    res.set('Cache-control', 'public, max-age=1800');
+  }
+
   res.json(await getRecommendations());
 });
 
