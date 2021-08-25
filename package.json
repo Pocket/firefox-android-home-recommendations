@@ -13,7 +13,7 @@
     "lint-fix": "eslint --fix \"src/**/*.ts\""
   },
   "dependencies": {
-    "@sentry/node": "^6.10.0",
+    "@sentry/node": "^6.11.0",
     "@sentry/tracing": "^6.10.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
