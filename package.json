@@ -14,12 +14,12 @@
   },
   "dependencies": {
     "@sentry/node": "^6.11.0",
-    "@sentry/tracing": "^6.11.0",
+    "@sentry/tracing": "^6.12.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
-    "aws-sdk": "^2.978.0",
+    "aws-sdk": "^2.979.0",
     "aws-xray-sdk-core": "^3.3.3",
     "aws-xray-sdk-express": "^3.3.3",
     "cross-fetch": "^3.1.4",
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
-    "@types/node": "^16.7.7",
+    "@types/node": "^16.7.8",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.30.0",
