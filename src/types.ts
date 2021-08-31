@@ -39,6 +39,6 @@ export type ClientApiRecommendation = {
 };
 
 export type ClientApiSlate = {
-  description: string;
+  id: string;
   recommendations: ClientApiRecommendation[];
 };

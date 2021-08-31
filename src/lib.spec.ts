@@ -1,64 +1,19 @@
+import { config } from './config';
 import { deriveCategory, transformSlateRecs, buildCdnImageUrl } from './lib';
 import { FAHRecommendation, ClientApiRecommendation } from './types';
 
 describe('test lib', () => {
   describe('deriveCategory', () => {
-    // descriptions below are the descriptions returned from each slate from
-    // recommendation-api. why don't we use this map in the `deriveCategory`
-    // function itself? well, the idea behind creating a slatelineup is that we
-    // can swap out slates without changing code in this application - we just
-    // refer to the slatelineup. that being the case, checking on sub-strings
-    // in the `deriveCategory` function gives us a *bit* more resiliency if
-    // and when we change out the underlying slates.
-    //
-    // yes, it's still inherently brittle. :/
-    const slateDescriptionMap = [
-      {
-        category: 'general',
-        desc: 'Curated items including syndicated that are at most a week old',
-      },
-      {
-        category: 'quick-reads',
-        desc: 'Curated short reads excluding syndicated',
-      },
-      {
-        category: 'must-reads',
-        desc: 'Curated items excluding syndicated that are at most a week old',
-      },
-      {
-        category: 'technology',
-        desc: 'Curated Technology Slate',
-      },
-      {
-        category: 'health',
-        desc: 'Curated Health Slate',
-      },
-      {
-        category: 'self-improvement',
-        desc: 'Curated Self-Improvement Slate',
-      },
-      {
-        category: 'food',
-        desc: 'Curated Food Slate',
-      },
-      {
-        category: 'science',
-        desc: 'Curated Science Slate',
-      },
-      {
-        category: 'entertainment',
-        desc: 'Curated Entertainment Slate',
-      },
-      {
-        category: 'career',
-        desc: 'Curated Career Slate',
-      },
-    ];
-
     it('should derive the expected category from a slate description', () => {
-      slateDescriptionMap.forEach((map) => {
-        expect(deriveCategory(map.desc)).toEqual(map.category);
-      });
+      for (const prop in config.app.slateIdCategoryMap) {
+        expect(deriveCategory(prop)).toEqual(
+          config.app.slateIdCategoryMap[prop]
+        );
+      }
+    });
+
+    it('should return `general` for an un-mapped slate ID', () => {
+      expect(deriveCategory('some-unknown-slate-id')).toEqual('general');
     });
   });
 

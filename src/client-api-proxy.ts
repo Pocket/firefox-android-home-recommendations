@@ -39,7 +39,7 @@ export async function getRecommendations(): Promise<FAHRecommendationResponse> {
 
   if (data) {
     data.data.getSlateLineup.slates.forEach((slate: ClientApiSlate) => {
-      const category = deriveCategory(slate.description);
+      const category = deriveCategory(slate.id);
       recs = recs.concat(transformSlateRecs(slate.recommendations, category));
     });
   }
@@ -59,7 +59,7 @@ async function getData(): Promise<ClientApiResponse | null> {
       query Query($slateLineupId: String!, $slateCount: Int) {
         getSlateLineup(slateLineupId: $slateLineupId, slateCount: $slateCount) {
           slates {
-            description
+            id
             recommendations {
               item {
                 resolvedUrl

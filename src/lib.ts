@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { config } from './config';
 import { FAHRecommendation, ClientApiRecommendation } from './types';
 
@@ -34,44 +35,29 @@ export function transformSlateRecs(
 }
 
 /**
- * parses a slate's description, e.g. "Curated Technology Slate" or
- * "Curated items excluding syndicated that are at most a week old" (ugh)
- * into a pre-defined category name.
+ * return the category based on the slate's ID. this is inherently brittle /
+ * a too tight coupling between Recs API and this app. however, we don't have
+ * a better way (yet) to do this mapping.
  *
- * yes, this is the only data point we have to work from.
- * @param slateDesc slate description from client API
+ * @param slateId slate ID from client API
  * @returns category name
  */
-export function deriveCategory(slateDesc: string): string {
-  let category;
+export function deriveCategory(slateId: string): string {
+  // if an unknown slate ID is passed in, this will result in a value of
+  // `undefined`
+  let category = config.app.slateIdCategoryMap[slateId];
 
-  slateDesc = slateDesc.toLowerCase();
+  // if the above does result in `undefined`, default to the `general` category
+  if (!category) {
+    // log to sentry so we can find out if unknown slates are being sent
+    Sentry.captureException(
+      new Error(
+        `Unexpected slate ID: ${slateId}. No category could be derived. (A slate may have changed in Recs API?)`
+      )
+    );
 
-  // i don't like any of this, but it's the most straight forward and semi
-  // future-proof approach i could think of.
-
-  // TODO: sync w/web home team (mathijs & chelsea) to see how they're
-  // handling this very fun problem
-  if (slateDesc.includes('short reads')) {
-    category = 'quick-reads';
-  } else if (slateDesc.includes('technology')) {
-    category = 'technology';
-  } else if (slateDesc.includes('health')) {
-    category = 'health';
-  } else if (slateDesc.includes('self-improvement')) {
-    category = 'self-improvement';
-  } else if (slateDesc.includes('food')) {
-    category = 'food';
-  } else if (slateDesc.includes('science')) {
-    category = 'science';
-  } else if (slateDesc.includes('entertainment')) {
-    category = 'entertainment';
-  } else if (slateDesc.includes('career')) {
-    category = 'career';
-  } else if (slateDesc.includes('excluding syndicated')) {
-    // this one is particularly heinous
-    category = 'must-reads';
-  } else {
+    // defaulting to `general` so firefox android can still use the
+    // recommendation
     category = 'general';
   }
 
