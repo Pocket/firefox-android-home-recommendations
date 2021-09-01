@@ -35,4 +35,5 @@ Test are run via `npm` commands:
 
 #### Testing Client API
 
-Load up `http://localhost:4005` in your browser. There you go.
+- Run `npm start`.
+- Load up `http://localhost:4005` in your browser. There you go.
