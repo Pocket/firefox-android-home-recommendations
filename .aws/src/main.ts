@@ -172,17 +172,26 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
         targetMaxCapacity: 10,
       },
       alarms: {
-        //TODO: When we start using this more we will change from non-critical to critical
+        // will call your phone if there are >= 10 5xx responses in 20 minutes
         http5xxError: {
           threshold: 10,
           evaluationPeriods: 2,
           period: 600,
-          actions: config.isDev ? [] : [],
+          actions: config.isDev
+            ? [pagerDuty.snsNonCriticalAlarmTopic.arn]
+            : [pagerDuty.snsCriticalAlarmTopic.arn],
         },
+        // will call your phone if latency >= 700ms once in a 5 minute period
         httpLatency: {
-          evaluationPeriods: 2,
-          threshold: 500,
-          actions: config.isDev ? [] : [],
+          // making this threshold 700 because, on a cache miss, this service
+          // will need to hit client API, which has to hit Recs API, so it the
+          // response could be a little slow. results are cached for 30 minutes
+          threshold: 700,
+          evaluationPeriods: 1,
+          period: 300,
+          actions: config.isDev
+            ? [pagerDuty.snsNonCriticalAlarmTopic.arn]
+            : [pagerDuty.snsCriticalAlarmTopic.arn],
         },
       },
     });
