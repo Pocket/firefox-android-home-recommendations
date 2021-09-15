@@ -172,17 +172,12 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
         targetMaxCapacity: 10,
       },
       alarms: {
-        //TODO: When we start using this more we will change from non-critical to critical
+        // will call your phone if there are >= 10 5xx responses in 20 minutes
         http5xxError: {
           threshold: 10,
           evaluationPeriods: 2,
           period: 600,
-          actions: config.isDev ? [] : [],
-        },
-        httpLatency: {
-          evaluationPeriods: 2,
-          threshold: 500,
-          actions: config.isDev ? [] : [],
+          actions: config.isDev ? [] : [pagerDuty.snsCriticalAlarmTopic.arn],
         },
       },
     });
