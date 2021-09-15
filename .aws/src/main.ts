@@ -172,12 +172,13 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
         targetMaxCapacity: 10,
       },
       alarms: {
-        // will call your phone if there are >= 10 5xx responses in 20 minutes
+        // alarms if >= 25% of responses are 5xx responses for 20 minutes
         http5xxError: {
-          threshold: 10,
-          evaluationPeriods: 2,
-          period: 600,
-          actions: config.isDev ? [] : [pagerDuty.snsCriticalAlarmTopic.arn],
+          threshold: 25,
+          evaluationPeriods: 4,
+          period: 300,
+          // non-critical while we investigate current 5xx responses
+          actions: config.isDev ? [] : [pagerDuty.snsNonCriticalAlarmTopic.arn],
         },
       },
     });

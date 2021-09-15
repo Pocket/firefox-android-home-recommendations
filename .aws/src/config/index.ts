@@ -8,7 +8,7 @@ const githubConnectionArn = isDev
 let environment;
 let domain;
 
-if (process.env.NODE_ENV === 'development') {
+if (isDev) {
   environment = 'Dev';
   domain = 'firefox-android-home-recommendations.getpocket.dev';
 } else {
