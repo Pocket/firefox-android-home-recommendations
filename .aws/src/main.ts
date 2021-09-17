@@ -173,12 +173,12 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
       },
       alarms: {
         // alarms if >= 25% of responses are 5xx responses for 20 minutes
-        http5xxError: {
-          threshold: 25,
+        http5xxErrorPercentage: {
+          threshold: 25, // 25%
           evaluationPeriods: 4,
-          period: 300,
+          period: 300, // 5 minutes
           // non-critical while we investigate current 5xx responses
-          actions: config.isDev ? [] : [pagerDuty.snsNonCriticalAlarmTopic.arn],
+          actions: config.isDev ? [] : [pagerDuty.snsCriticalAlarmTopic.arn],
         },
       },
     });
