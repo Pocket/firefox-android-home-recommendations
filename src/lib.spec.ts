@@ -1,6 +1,15 @@
 import { config } from './config';
-import { deriveCategory, transformSlateRecs, buildCdnImageUrl } from './lib';
-import { FAHRecommendation, ClientApiRecommendation } from './types';
+import {
+  deriveCategory,
+  derivePublisher,
+  transformSlateRecs,
+  buildCdnImageUrl,
+} from './lib';
+import {
+  FAHRecommendation,
+  ClientApiRecommendation,
+  ClientApiItem,
+} from './types';
 
 describe('test lib', () => {
   describe('deriveCategory', () => {
@@ -14,6 +23,43 @@ describe('test lib', () => {
 
     it('should return `general` for an un-mapped slate ID', () => {
       expect(deriveCategory('some-unknown-slate-id')).toEqual('general');
+    });
+  });
+
+  describe('derivePublisher', () => {
+    let item: ClientApiItem;
+
+    beforeEach(() => {
+      item = {
+        resolvedUrl:
+          'https://getpocket.com/explore/item/7-incredible-benefits-of-lifting-weights-that-have-nothing-to-do-with-building-muscle',
+        title:
+          '7 Incredible Benefits of Lifting Weights That Have Nothing to Do With Building Muscle',
+        topImageUrl:
+          'https://pocket-image-cache.com/1200x/filters:format(jpg):extract_focal()/https%3A%2F%2Fpocket-syndicated-images.s3.amazonaws.com%2Farticles%2F6786%2F1628710235_61141fc464340.png',
+        timeToRead: 6,
+        domainMetadata: {
+          name: 'Pocket',
+        },
+        // normally a value of 'Pocket' above would dictate syndication data -
+        // omitting here for testing purposes.
+        syndicatedArticle: null,
+      };
+    });
+
+    it('should use the domain publisher if not a syndicated article', () => {
+      expect(derivePublisher(item)).toEqual('Pocket');
+    });
+
+    it('should use the syndicated article publisher if present', () => {
+      // mimic syndication data for the above
+      item.syndicatedArticle = {
+        publisher: {
+          name: 'Prevention',
+        },
+      };
+
+      expect(derivePublisher(item)).toEqual('Prevention');
     });
   });
 
@@ -45,6 +91,7 @@ describe('test lib', () => {
           domainMetadata: {
             name: publisher1,
           },
+          syndicatedArticle: null,
         },
       };
 
@@ -57,6 +104,7 @@ describe('test lib', () => {
           domainMetadata: {
             name: publisher2,
           },
+          syndicatedArticle: null,
         },
       };
     });

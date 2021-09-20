@@ -69,6 +69,11 @@ async function getData(): Promise<ClientApiResponse | null> {
                 domainMetadata {
                   name
                 }
+                syndicatedArticle {
+                  publisher {
+                    name
+                  }
+                }
               }
             }
           }
