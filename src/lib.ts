@@ -41,12 +41,29 @@ export function transformSlateRecs(
 /**
  * takes a recommendation and, if it's a syndicated article, returns the
  * original publisher (instead of "Pocket"). otherwise, returns the publisher
- * from the domain.
+ * from the domain. returns an empty string if no publisher could be derived.
  * @param item ClientAPIItem the raw item from client API
  * @returns string
  */
 export function derivePublisher(item: ClientApiItem): string {
-  return item.syndicatedArticle?.publisher?.name || item.domainMetadata.name;
+  let publisher;
+
+  if (item.syndicatedArticle?.publisher?.name) {
+    publisher = item.syndicatedArticle.publisher.name;
+  } else if (item.domainMetadata?.name) {
+    publisher = item.domainMetadata.name;
+  } else {
+    // log to sentry so we can see recommendations without publishers
+    Sentry.captureException(
+      new Error(
+        `No publisher could be derived for resolvedUrl: ${item.resolvedUrl}`
+      )
+    );
+
+    publisher = '';
+  }
+
+  return publisher;
 }
 
 /**

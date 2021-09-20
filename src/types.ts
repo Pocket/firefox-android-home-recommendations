@@ -26,7 +26,7 @@ export type ClientApiDomainMeta = {
   name: string;
 };
 
-export type SyndicatedArticle = {
+export type ClientApiSyndicatedArticle = {
   publisher: {
     name: string;
   };
@@ -37,8 +37,8 @@ export type ClientApiItem = {
   title: string;
   topImageUrl: string;
   timeToRead: number | null;
-  domainMetadata: ClientApiDomainMeta;
-  syndicatedArticle: SyndicatedArticle | null;
+  domainMetadata: ClientApiDomainMeta | null;
+  syndicatedArticle: ClientApiSyndicatedArticle | null;
 };
 
 export type ClientApiRecommendation = {

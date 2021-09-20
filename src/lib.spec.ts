@@ -61,6 +61,12 @@ describe('test lib', () => {
 
       expect(derivePublisher(item)).toEqual('Prevention');
     });
+
+    it('should return an empty string if no publisher could be found', () => {
+      item.domainMetadata = null;
+
+      expect(derivePublisher(item)).toEqual('');
+    });
   });
 
   describe('transformSlateRecs', () => {
