@@ -13,7 +13,7 @@
     "lint-fix": "eslint --fix \"src/**/*.ts\""
   },
   "dependencies": {
-    "@sentry/node": "^6.13.0",
+    "@sentry/node": "^6.13.2",
     "@sentry/tracing": "^6.13.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
@@ -28,7 +28,7 @@
     "graphql-tag": "^2.12.5"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.1",
+    "@types/jest": "^27.0.2",
     "@types/node": "^16.9.4",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
