@@ -1,6 +1,10 @@
 import * as Sentry from '@sentry/node';
 import { config } from './config';
-import { FAHRecommendation, ClientApiRecommendation } from './types';
+import {
+  FAHRecommendation,
+  ClientApiRecommendation,
+  ClientApiItem,
+} from './types';
 
 /**
  * takes a slate object from client API and transforms it to match the expected
@@ -16,7 +20,7 @@ export function transformSlateRecs(
   let rec: FAHRecommendation;
 
   // iterate over each recommendation in the slate
-  rawRecs.forEach((rawRec) => {
+  rawRecs.forEach((rawRec: ClientApiRecommendation) => {
     rec = {
       category,
       url: rawRec.item.resolvedUrl,
@@ -24,7 +28,7 @@ export function transformSlateRecs(
       imageUrl: buildCdnImageUrl(rawRec.item.topImageUrl),
       // item.domainMetadata.name is either the proper name ("New York Times")
       // or the root domain ("nytimes.com")
-      publisher: rawRec.item.domainMetadata.name,
+      publisher: derivePublisher(rawRec.item),
       timeToRead: rawRec.item.timeToRead, // this might be null
     };
 
@@ -32,6 +36,34 @@ export function transformSlateRecs(
   });
 
   return recs;
+}
+
+/**
+ * takes a recommendation and, if it's a syndicated article, returns the
+ * original publisher (instead of "Pocket"). otherwise, returns the publisher
+ * from the domain. returns an empty string if no publisher could be derived.
+ * @param item ClientAPIItem the raw item from client API
+ * @returns string
+ */
+export function derivePublisher(item: ClientApiItem): string {
+  let publisher;
+
+  if (item.syndicatedArticle?.publisher?.name) {
+    publisher = item.syndicatedArticle.publisher.name;
+  } else if (item.domainMetadata?.name) {
+    publisher = item.domainMetadata.name;
+  } else {
+    // log to sentry so we can see recommendations without publishers
+    Sentry.captureException(
+      new Error(
+        `No publisher could be derived for resolvedUrl: ${item.resolvedUrl}`
+      )
+    );
+
+    publisher = '';
+  }
+
+  return publisher;
 }
 
 /**

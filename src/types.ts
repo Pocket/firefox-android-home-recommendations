@@ -26,12 +26,19 @@ export type ClientApiDomainMeta = {
   name: string;
 };
 
+export type ClientApiSyndicatedArticle = {
+  publisher: {
+    name: string;
+  };
+};
+
 export type ClientApiItem = {
   resolvedUrl: string;
   title: string;
   topImageUrl: string;
   timeToRead: number | null;
-  domainMetadata: ClientApiDomainMeta;
+  domainMetadata: ClientApiDomainMeta | null;
+  syndicatedArticle: ClientApiSyndicatedArticle | null;
 };
 
 export type ClientApiRecommendation = {
