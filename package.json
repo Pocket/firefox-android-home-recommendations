@@ -19,7 +19,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
-    "aws-sdk": "^2.1005.0",
+    "aws-sdk": "^2.1006.0",
     "aws-xray-sdk-core": "^3.3.3",
     "aws-xray-sdk-express": "^3.3.3",
     "cross-fetch": "^3.1.4",
