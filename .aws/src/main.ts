@@ -7,10 +7,9 @@ import {
 } from 'cdktf';
 import {
   AwsProvider,
-  DataAwsCallerIdentity,
-  DataAwsKmsAlias,
-  DataAwsRegion,
-  DataAwsSnsTopic,
+  datasources,
+  kms,
+  sns
 } from '@cdktf/provider-aws';
 import { config } from './config';
 import {
@@ -70,13 +69,13 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
       },
     });
 
-    const region = new DataAwsRegion(this, 'region');
-    const caller = new DataAwsCallerIdentity(this, 'caller');
-    const secretsManager = new DataAwsKmsAlias(this, 'kms_alias', {
+    const region = new datasources.DataAwsRegion(this, 'region');
+    const caller = new datasources.DataAwsCallerIdentity(this, 'caller');
+    const secretsManager = new kms.DataAwsKmsAlias(this, 'kms_alias', {
       name: 'alias/aws/secretsmanager',
     });
 
-    const snsTopic = new DataAwsSnsTopic(this, 'backend_notifications', {
+    const snsTopic = new sns.DataAwsSnsTopic(this, 'backend_notifications', {
       name: `Backend-${config.environment}-ChatBot`,
     });
 
