@@ -1,4 +1,4 @@
-FROM node:17-bullseye-slim@sha256:ba6023b1dc477b8527abab2585fd1861e81ef1b9ee8029d248b86dbf88ac2c26
+FROM node:17-bullseye-slim@sha256:2ce3d9c4d432e462e9f0b4c20f531203221e35e339c98e0a895821dc95c64098
 
 ARG GIT_SHA
 
