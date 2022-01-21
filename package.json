@@ -22,7 +22,7 @@
     "aws-sdk": "^2.1060.0",
     "aws-xray-sdk-core": "^3.3.4",
     "aws-xray-sdk-express": "^3.3.4",
-    "cross-fetch": "^3.1.4",
+    "cross-fetch": "^3.1.5",
     "express": "^4.17.2",
     "graphql": "^15.8.0",
     "graphql-tag": "^2.12.6"
