@@ -46,7 +46,7 @@ only_dev: &only_dev
 jobs:
   build:
     docker:
-      - image: circleci/node:15
+      - image: circleci/node:16
     steps:
       - checkout
       # Define the working directory for this job
