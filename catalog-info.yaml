@@ -1,0 +1,77 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: firefox-android-home-recommendations
+  description: Provides recommendations to be consumed by Firefox for Android.
+  annotations:
+    github.com/project-slug: pocket/firefox-android-home-recommendations
+    github.com/team-slug: Pocket/backend
+    circleci.com/project-slug: github/pocket/firefox-android-home-recommendations
+    sentry.io/project-slug: firefox-android-home-recommendations
+  links:
+    - url: https://firefox-android-home-recommendations.getpocket.com/
+      title: Firefox Android Home Recommendations (Production)
+      icon: collections
+    - url: https://firefox-android-home-recommendations.getpocket.dev/
+      title: Firefox Android Home Recommendations (Dev)
+      icon: collections
+spec:
+  type: service
+  owner: backend
+  lifecycle: production
+  consumesApis:
+    - client-api
+  providesApis:
+    - firefox-android-home-recommendations
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: firefox-android-home-recommendations
+  description: API of recommendations to be consumed by Firefox for Android.
+spec:
+  type: rest
+  owner: backend
+  definition: |
+    openapi: 3.0.1
+    info:
+      title: Firefox Android Home Recomendations API
+      description: Provides recomendations for Firefox Android Home
+      version: '0.1'
+    servers:
+      - url: https://firefox-android-home-recommendations.getpocket.com
+      - url: https://firefox-android-home-recommendations.getpocket.dev
+    paths:
+      /:
+        get:
+          description: URL to request
+          responses:
+            '200':
+              description: OK
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      recomendations:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              catgeory:
+                                type: string
+                                enum: [general, must-reads, quick-reads, technology, health, self-improvement, food, science, entertainment, career]
+                              url:
+                                type: string
+                              title:
+                                type: string
+                              imageUrl:
+                                type: string
+                                description: The image cdn url to use. You will need to string replace w & h with your width and height values
+                              publisher:
+                                type: string
+                              timeToRead:
+                                type: integer
+  lifecycle: production
