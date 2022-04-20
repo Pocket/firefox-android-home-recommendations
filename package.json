@@ -21,7 +21,7 @@
     "apollo-link-http": "1.5.17",
     "aws-sdk": "2.1086.0",
     "aws-xray-sdk-core": "3.3.5",
-    "aws-xray-sdk-express": "3.3.4",
+    "aws-xray-sdk-express": "3.3.5",
     "cross-fetch": "3.1.5",
     "express": "4.17.3",
     "graphql": "15.8.0",
