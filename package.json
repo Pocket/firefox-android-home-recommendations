@@ -13,23 +13,21 @@
     "lint-fix": "eslint --fix \"src/**/*.ts\""
   },
   "dependencies": {
+    "@apollo/client": "^3.6.0",
     "@sentry/node": "6.19.6",
     "@sentry/tracing": "6.19.6",
-    "apollo-cache-inmemory": "1.6.6",
-    "apollo-client": "2.6.10",
-    "apollo-link-context": "1.0.20",
-    "apollo-link-http": "1.5.17",
     "aws-sdk": "2.1086.0",
     "aws-xray-sdk-core": "3.3.5",
     "aws-xray-sdk-express": "3.3.5",
     "cross-fetch": "3.1.5",
     "express": "4.17.3",
-    "graphql": "15.8.0",
+    "graphql": "^16.4.0",
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
     "@types/jest": "27.4.1",
     "@types/node": "16.11.27",
+    "@types/react": "^18.0.8",
     "@typescript-eslint/eslint-plugin": "5.13.0",
     "@typescript-eslint/parser": "5.13.0",
     "eslint": "8.10.0",
