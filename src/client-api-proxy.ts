@@ -1,8 +1,6 @@
 import * as Sentry from '@sentry/node';
-import { createHttpLink } from 'apollo-link-http';
-import ApolloClient from 'apollo-client';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import gql from 'graphql-tag';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'cross-fetch';
 import { config } from './config';
 import {
@@ -14,7 +12,7 @@ import {
 import { transformSlateRecs, deriveCategory } from './lib';
 
 const client = new ApolloClient({
-  link: createHttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
+  link: new HttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
   cache: new InMemoryCache(),
   name: config.app.apolloClientName,
   version: config.app.version,
