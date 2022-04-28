@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.0",
-    "@sentry/node": "6.19.6",
-    "@sentry/tracing": "6.19.6",
+    "@sentry/node": "6.19.7",
+    "@sentry/tracing": "6.19.7",
     "aws-sdk": "2.1086.0",
     "aws-xray-sdk-core": "3.3.5",
     "aws-xray-sdk-express": "3.3.5",
