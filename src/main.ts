@@ -1,10 +1,10 @@
 import AWSXRay from 'aws-xray-sdk-core';
+import { config } from './config';
+import { getRecommendations } from './client-api-proxy';
 import xrayExpress from 'aws-xray-sdk-express';
 import * as Sentry from '@sentry/node';
 import https from 'https';
 import express from 'express';
-import { config } from './config';
-import { getRecommendations } from './client-api-proxy';
 
 // TODO: copy .aws directory from client-api
 
