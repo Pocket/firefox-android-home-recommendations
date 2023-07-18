@@ -1,0 +1,3 @@
+{
+  "extends": "@pocket-tools/eslint-config"
+}
