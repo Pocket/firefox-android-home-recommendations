@@ -49,7 +49,7 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
         workspaces: {
           name: 'incident-management',
         },
-      }
+      },
     );
 
     const pagerDuty = new PocketPagerDuty(this, 'pagerduty', {
@@ -211,6 +211,6 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
 const app = new App();
 new FirefoxAndroidHomeRecommendations(
   app,
-  'firefox-android-home-recommendations'
+  'firefox-android-home-recommendations',
 );
 app.synth();

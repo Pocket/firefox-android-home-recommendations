@@ -59,6 +59,6 @@ app.use(xrayExpress.closeSegment());
 
 app.listen({ port: config.app.port }, () => {
   console.log(
-    `🚀 Firefox Android Home Recommendations ready at http://localhost:${config.app.port}`
+    `🚀 Firefox Android Home Recommendations ready at http://localhost:${config.app.port}`,
   );
 });

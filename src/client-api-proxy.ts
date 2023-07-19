@@ -86,7 +86,7 @@ async function getData(): Promise<ClientApiResponse | null> {
 
   if (!data.data?.getSlateLineup?.slates) {
     Sentry.captureException(
-      new Error('No data returned from Firefox Android Home slate lineup')
+      new Error('No data returned from Firefox Android Home slate lineup'),
     );
 
     return null;
