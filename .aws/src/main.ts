@@ -5,16 +5,20 @@ import {
   RemoteBackend,
   TerraformStack,
 } from 'cdktf';
-import { AwsProvider, datasources, kms, sns } from '@cdktf/provider-aws';
+import { PagerdutyProvider } from '@cdktf/provider-pagerduty/lib/provider';
+import { LocalProvider } from '@cdktf/provider-local/lib/provider';
+import { NullProvider } from '@cdktf/provider-null/lib/provider';
+import { AwsProvider } from '@cdktf/provider-aws/lib/provider';
+import { DataAwsKmsAlias } from '@cdktf/provider-aws/lib/data-aws-kms-alias';
+import { DataAwsSnsTopic } from '@cdktf/provider-aws/lib/data-aws-sns-topic';
+import { DataAwsRegion } from '@cdktf/provider-aws/lib/data-aws-region';
+import { DataAwsCallerIdentity } from '@cdktf/provider-aws/lib/data-aws-caller-identity';
 import { config } from './config';
 import {
   PocketALBApplication,
   PocketPagerDuty,
   PocketECSCodePipeline,
 } from '@pocket-tools/terraform-modules';
-import { PagerdutyProvider } from '@cdktf/provider-pagerduty';
-import { LocalProvider } from '@cdktf/provider-local';
-import { NullProvider } from '@cdktf/provider-null';
 
 class FirefoxAndroidHomeRecommendations extends TerraformStack {
   constructor(scope: Construct, name: string) {
@@ -64,13 +68,13 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
       },
     });
 
-    const region = new datasources.DataAwsRegion(this, 'region');
-    const caller = new datasources.DataAwsCallerIdentity(this, 'caller');
-    const secretsManager = new kms.DataAwsKmsAlias(this, 'kms_alias', {
+    const region = new DataAwsRegion(this, 'region');
+    const caller = new DataAwsCallerIdentity(this, 'caller');
+    const secretsManager = new DataAwsKmsAlias(this, 'kms_alias', {
       name: 'alias/aws/secretsmanager',
     });
 
-    const snsTopic = new sns.DataAwsSnsTopic(this, 'backend_notifications', {
+    const snsTopic = new DataAwsSnsTopic(this, 'backend_notifications', {
       name: `Backend-${config.environment}-ChatBot`,
     });
 
