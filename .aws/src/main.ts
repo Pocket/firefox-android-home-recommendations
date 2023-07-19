@@ -5,12 +5,7 @@ import {
   RemoteBackend,
   TerraformStack,
 } from 'cdktf';
-import {
-  AwsProvider,
-  datasources,
-  kms,
-  sns
-} from '@cdktf/provider-aws';
+import { AwsProvider, datasources, kms, sns } from '@cdktf/provider-aws';
 import { config } from './config';
 import {
   PocketALBApplication,
@@ -54,18 +49,18 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
         workspaces: {
           name: 'incident-management',
         },
-      }
+      },
     );
 
     const pagerDuty = new PocketPagerDuty(this, 'pagerduty', {
       prefix: config.prefix,
       service: {
-        criticalEscalationPolicyId: incidentManagement.get(
-          'policy_backend_product_critical_id'
-        ).toString(),
-        nonCriticalEscalationPolicyId: incidentManagement.get(
-          'policy_backend_product_non_critical_id'
-        ).toString(),
+        criticalEscalationPolicyId: incidentManagement
+          .get('policy_backend_product_critical_id')
+          .toString(),
+        nonCriticalEscalationPolicyId: incidentManagement
+          .get('policy_backend_product_non_critical_id')
+          .toString(),
       },
     });
 
@@ -216,6 +211,6 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
 const app = new App();
 new FirefoxAndroidHomeRecommendations(
   app,
-  'firefox-android-home-recommendations'
+  'firefox-android-home-recommendations',
 );
 app.synth();
