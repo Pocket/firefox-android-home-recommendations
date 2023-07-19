@@ -25,7 +25,7 @@
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
-    "@pocket-tools/eslint-config": "2.0.0",
+    "@pocket-tools/eslint-config": "2.1.7",
     "@types/jest": "29.5.3",
     "@types/node": "16.18.38",
     "@types/react": "18.2.15",
