@@ -14,7 +14,7 @@ import {
  */
 export function transformSlateRecs(
   rawRecs: ClientApiRecommendation[],
-  category: string
+  category: string,
 ): FAHRecommendation[] {
   const recs: FAHRecommendation[] = [];
   let rec: FAHRecommendation;
@@ -56,8 +56,8 @@ export function derivePublisher(item: ClientApiItem): string {
     // log to sentry so we can see recommendations without publishers
     Sentry.captureException(
       new Error(
-        `No publisher could be derived for resolvedUrl: ${item.resolvedUrl}`
-      )
+        `No publisher could be derived for resolvedUrl: ${item.resolvedUrl}`,
+      ),
     );
 
     publisher = '';
@@ -84,8 +84,8 @@ export function deriveCategory(slateId: string): string {
     // log to sentry so we can find out if unknown slates are being sent
     Sentry.captureException(
       new Error(
-        `Unexpected slate ID: ${slateId}. No category could be derived. (A slate may have changed in Recs API?)`
-      )
+        `Unexpected slate ID: ${slateId}. No category could be derived. (A slate may have changed in Recs API?)`,
+      ),
     );
 
     // defaulting to `general` so firefox android can still use the

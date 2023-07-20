@@ -16,7 +16,7 @@ describe('test lib', () => {
     it('should derive the expected category from a slate description', () => {
       for (const prop in config.app.slateIdCategoryMap) {
         expect(deriveCategory(prop)).toEqual(
-          config.app.slateIdCategoryMap[prop]
+          config.app.slateIdCategoryMap[prop],
         );
       }
     });
