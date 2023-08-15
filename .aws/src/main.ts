@@ -19,6 +19,7 @@ import {
   PocketPagerDuty,
   PocketECSCodePipeline,
 } from '@pocket-tools/terraform-modules';
+import { CloudwatchLogGroup } from '@cdktf/provider-aws/lib/cloudwatch-log-group';
 
 class FirefoxAndroidHomeRecommendations extends TerraformStack {
   constructor(scope: Construct, name: string) {
@@ -100,6 +101,8 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
               value: process.env.NODE_ENV, // this gives us a nice lowercase production and development
             },
           ],
+          logGroup: this.createCustomLogGroup('app'),
+          logMultilinePattern: '^\\S.+',
           secretEnvVars: [
             {
               name: 'SENTRY_DSN',
@@ -107,18 +110,6 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
             },
           ],
           healthCheck: config.healthCheck,
-        },
-        {
-          name: 'xray-daemon',
-          containerImage: 'amazon/aws-xray-daemon',
-          portMappings: [
-            {
-              hostPort: 2000,
-              containerPort: 2000,
-              protocol: 'udp',
-            },
-          ],
-          command: ['--region', 'us-east-1', '--local-mode'],
         },
       ],
       codeDeploy: {
@@ -160,19 +151,7 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
             effect: 'Allow',
           },
         ],
-        taskRolePolicyStatements: [
-          {
-            actions: [
-              'xray:PutTraceSegments',
-              'xray:PutTelemetryRecords',
-              'xray:GetSamplingRules',
-              'xray:GetSamplingTargets',
-              'xray:GetSamplingStatisticSummaries',
-            ],
-            resources: ['*'],
-            effect: 'Allow',
-          },
-        ],
+        taskRolePolicyStatements: [{}],
         taskExecutionDefaultAttachmentArn:
           'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy',
       },
@@ -209,6 +188,26 @@ class FirefoxAndroidHomeRecommendations extends TerraformStack {
         branchName: config.codePipeline.branch,
       },
     });
+  }
+
+  /**
+   * Create Custom log group for ECS to share across task revisions
+   * @param containerName
+   * @private
+   */
+  private createCustomLogGroup(containerName: string) {
+    const logGroup = new CloudwatchLogGroup(
+      this,
+      `${containerName}-log-group`,
+      {
+        name: `/Backend/${config.prefix}/ecs/${containerName}`,
+        retentionInDays: 90,
+        skipDestroy: true,
+        tags: config.tags,
+      },
+    );
+
+    return logGroup.name;
   }
 }
 

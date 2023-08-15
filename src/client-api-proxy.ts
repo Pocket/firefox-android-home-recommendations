@@ -10,6 +10,7 @@ import {
   FAHRecommendationResponse,
 } from './types';
 import { transformSlateRecs, deriveCategory } from './lib';
+import {serverLogger} from './main';
 
 const client = new ApolloClient({
   link: new HttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
@@ -30,8 +31,9 @@ export async function getRecommendations(): Promise<FAHRecommendationResponse> {
   try {
     data = await getData();
   } catch (err) {
-    console.log('error retrieving recommendations!');
-    console.log(err);
+    serverLogger.error(`getRecommendations: error retrieving recommendations`, {
+      error: err,
+    });
     Sentry.captureException(err);
   }
 
