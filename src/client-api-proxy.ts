@@ -10,7 +10,7 @@ import {
   FAHRecommendationResponse,
 } from './types';
 import { transformSlateRecs, deriveCategory } from './lib';
-import {serverLogger} from './main';
+import { serverLogger } from './main';
 
 const client = new ApolloClient({
   link: new HttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
