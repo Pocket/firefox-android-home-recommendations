@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client/core';
+import { ApolloClient, HttpLink } from '@apollo/client/core';
 import gql from 'graphql-tag';
 import fetch from 'cross-fetch';
 import { config } from './config';
@@ -14,7 +14,6 @@ import { serverLogger } from './main';
 
 const client = new ApolloClient({
   link: new HttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
-  cache: new InMemoryCache(),
   name: config.app.apolloClientName,
   version: config.app.version,
 });
