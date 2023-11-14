@@ -14,8 +14,13 @@ import { serverLogger } from './main';
 
 const client = new ApolloClient({
   link: new HttpLink({ fetch, uri: 'https://client-api.getpocket.com' }),
-  cache: new InMemoryCache(),
   name: config.app.apolloClientName,
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'no-cache', // Cache is required, but can be disabled.
+    },
+  },
   version: config.app.version,
 });
 
