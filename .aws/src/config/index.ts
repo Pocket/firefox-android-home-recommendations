@@ -27,6 +27,9 @@ export const config = {
   tags: {
     service: name,
     environment,
+    app_code: 'content',
+    component_code: 'content-firefox-android-home-recommendations',
+    env_code: isDev ? 'dev' : 'prod',
   },
   codePipeline: {
     githubConnectionArn,
