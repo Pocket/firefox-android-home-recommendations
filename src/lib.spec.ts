@@ -33,10 +33,6 @@ describe('test lib', () => {
       item = {
         resolvedUrl:
           'https://getpocket.com/explore/item/7-incredible-benefits-of-lifting-weights-that-have-nothing-to-do-with-building-muscle',
-        title:
-          '7 Incredible Benefits of Lifting Weights That Have Nothing to Do With Building Muscle',
-        topImageUrl:
-          'https://pocket-image-cache.com/1200x/filters:format(jpg):extract_focal()/https%3A%2F%2Fpocket-syndicated-images.s3.amazonaws.com%2Farticles%2F6786%2F1628710235_61141fc464340.png',
         timeToRead: 6,
         domainMetadata: {
           name: 'Pocket',
@@ -44,6 +40,12 @@ describe('test lib', () => {
         // normally a value of 'Pocket' above would dictate syndication data -
         // omitting here for testing purposes.
         syndicatedArticle: null,
+        corpusItem: {
+          title:
+            '7 Incredible Benefits of Lifting Weights That Have Nothing to Do With Building Muscle',
+          imageUrl:
+            'https://pocket-image-cache.com/1200x/filters:format(jpg):extract_focal()/https%3A%2F%2Fpocket-syndicated-images.s3.amazonaws.com%2Farticles%2F6786%2F1628710235_61141fc464340.png',
+        },
       };
     });
 
@@ -91,26 +93,30 @@ describe('test lib', () => {
       rawRec1 = {
         item: {
           resolvedUrl: url1,
-          title: title1,
-          topImageUrl: imageUrl1,
           timeToRead: ttr1,
           domainMetadata: {
             name: publisher1,
           },
           syndicatedArticle: null,
+          corpusItem: {
+            title: title1,
+            imageUrl: imageUrl1,
+          },
         },
       };
 
       rawRec2 = {
         item: {
           resolvedUrl: url2,
-          title: title2,
-          topImageUrl: imageUrl2,
           timeToRead: ttr2,
           domainMetadata: {
             name: publisher2,
           },
           syndicatedArticle: null,
+          corpusItem: {
+            title: title2,
+            imageUrl: imageUrl2,
+          },
         },
       };
     });
@@ -155,6 +161,14 @@ describe('test lib', () => {
       };
 
       expect(transformSlateRecs(rawRecs, category)).toEqual([expected]);
+    });
+
+    it('should not return a recommendation if the corpus item is missing', () => {
+      rawRec1.item.corpusItem = null;
+
+      const rawRecs: ClientApiRecommendation[] = [rawRec1];
+
+      expect(transformSlateRecs(rawRecs, category)).toEqual([]);
     });
   });
 });
