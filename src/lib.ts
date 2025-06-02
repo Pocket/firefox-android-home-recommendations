@@ -21,11 +21,15 @@ export function transformSlateRecs(
 
   // iterate over each recommendation in the slate
   rawRecs.forEach((rawRec: ClientApiRecommendation) => {
+    if (!rawRec.item.corpusItem) {
+      return;
+    }
+
     rec = {
       category,
       url: rawRec.item.resolvedUrl,
-      title: rawRec.item.title,
-      imageUrl: buildCdnImageUrl(rawRec.item.topImageUrl),
+      title: rawRec.item.corpusItem.title,
+      imageUrl: buildCdnImageUrl(rawRec.item.corpusItem.imageUrl),
       // item.domainMetadata.name is either the proper name ("New York Times")
       // or the root domain ("nytimes.com")
       publisher: derivePublisher(rawRec.item),

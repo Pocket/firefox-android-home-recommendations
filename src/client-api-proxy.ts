@@ -68,8 +68,6 @@ async function getData(): Promise<ClientApiResponse | null> {
             recommendations {
               item {
                 resolvedUrl
-                title
-                topImageUrl
                 timeToRead
                 domainMetadata {
                   name
@@ -78,6 +76,10 @@ async function getData(): Promise<ClientApiResponse | null> {
                   publisher {
                     name
                   }
+                }
+                corpusItem {
+                  title
+                  imageUrl
                 }
               }
             }
