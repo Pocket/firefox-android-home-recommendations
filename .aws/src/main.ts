@@ -1,9 +1,5 @@
 import { Construct } from 'constructs';
-import {
-  App,
-  S3Backend,
-  TerraformStack,
-} from 'cdktf';
+import { App, S3Backend, TerraformStack} from 'cdktf';
 import { PagerdutyProvider } from '@cdktf/provider-pagerduty/lib/provider';
 import { LocalProvider } from '@cdktf/provider-local/lib/provider';
 import { NullProvider } from '@cdktf/provider-null/lib/provider';
